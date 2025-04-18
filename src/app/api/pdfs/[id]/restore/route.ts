@@ -4,12 +4,12 @@ import PdfData from '@/models/pdfData';
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     await dbConnect();
     
-    const { id } = params;
+    const { id } = context.params;
     if (!id) {
       return NextResponse.json({
         success: false,

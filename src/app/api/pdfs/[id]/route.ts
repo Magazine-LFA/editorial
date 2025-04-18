@@ -1,16 +1,16 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongo';
 import PdfData from '@/models/pdfData';
-import { deleteFile } from '@/lib/firebase-storage';
+import { deleteFile } from '@/lib/supabase-storage';
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     await dbConnect();
     
-    const { id } = params;
+    const { id } = context.params;
     if (!id) {
       return NextResponse.json({
         success: false,
@@ -27,7 +27,7 @@ export async function DELETE(
       }, { status: 404 });
     }
 
-    // Delete file from Firebase Storage
+    // Delete file from Supabase Storage
     try {
       const fileName = pdf.fileUrl.split('/').pop();
       if (fileName) {

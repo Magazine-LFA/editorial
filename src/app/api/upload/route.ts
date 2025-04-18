@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import dbConnect from '@/lib/mongo'
 import PdfData from '@/models/pdfData'
-import { uploadFile } from '@/lib/firebase-storage'
+import { uploadFile } from '@/lib/supabase-storage'
 
 export async function POST(req: Request) {
   try {
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Database connection failed' }, { status: 500 })
     }
 
-    // Upload file to Firebase Storage
+    // Upload file to Supabase Storage
     const fileName = `${slug}-${Date.now()}.pdf`
     const fileUrl = await uploadFile(file, fileName)
 
