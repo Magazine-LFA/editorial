@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import dbConnect from '@/lib/mongo'
 import PdfData from '@/models/pdfData'
-import { uploadFile } from '@/lib/supabase-storage'
+import { uploadFile } from '@/lib/cloudinary'
 
 export async function POST(req: Request) {
   try {
@@ -36,16 +36,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Database connection failed' }, { status: 500 })
     }
 
-    // Upload file to Supabase Storage
+    // Upload file to Cloudinary
     const fileName = `${slug}-${Date.now()}.pdf`
-    const fileUrl = await uploadFile(file, fileName)
+    const uploadResult = await uploadFile(file, fileName)
+
+    if (!uploadResult.success) {
+      return NextResponse.json({ 
+        error: 'File upload failed', 
+        message: uploadResult.error 
+      }, { status: 500 });
+    }
 
     // Save metadata to MongoDB
     try {
       const newDoc = await PdfData.create({
         title,
         slug,
-        fileUrl,
+        fileUrl: uploadResult.url,
         scheduled_date,
         type,
         views: 0

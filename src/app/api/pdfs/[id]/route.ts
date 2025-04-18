@@ -1,58 +1,40 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongo';
 import PdfData from '@/models/pdfData';
-import { deleteFile } from '@/lib/supabase-storage';
+import { deleteFile } from '@/lib/cloudinary';
 
 export async function DELETE(
-  request: Request,
-  context: { params: { id: string } }
+  req: Request,
+  { params }: { params: { id: string } }
 ) {
   try {
     await dbConnect();
     
-    const { id } = context.params;
-    if (!id) {
-      return NextResponse.json({
-        success: false,
-        error: 'PDF ID is required'
-      }, { status: 400 });
-    }
-
-    const pdf = await PdfData.findById(id);
+    const pdf = await PdfData.findById(params.id);
     
     if (!pdf) {
-      return NextResponse.json({
-        success: false,
-        error: 'PDF not found'
-      }, { status: 404 });
+      return NextResponse.json({ error: 'PDF not found' }, { status: 404 });
     }
 
-    // Delete file from Supabase Storage
-    try {
-      const fileName = pdf.fileUrl.split('/').pop();
-      if (fileName) {
-        await deleteFile(fileName);
-      }
-    } catch (storageError) {
-      console.error('Error deleting file from storage:', storageError);
-      // Continue with the deletion even if storage deletion fails
+    // Extract filename from the URL
+    const urlParts = pdf.fileUrl.split('/');
+    const fileName = urlParts[urlParts.length - 1];
+
+    // Delete file from Cloudinary
+    const deleteResult = await deleteFile(fileName);
+    if (!deleteResult.success) {
+      console.error('Failed to delete file from Cloudinary:', deleteResult.error);
     }
 
-    // Update without validation
-    await PdfData.findByIdAndUpdate(id, {
-      isDeleted: true,
-      deletedAt: new Date()
-    }, { runValidators: false });
+    // Delete from database
+    await PdfData.findByIdAndDelete(params.id);
 
-    return NextResponse.json({
-      success: true,
-      message: 'PDF deleted successfully'
-    });
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting PDF:', error);
-    return NextResponse.json({
-      success: false,
-      error: 'Failed to delete PDF'
-    }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to delete PDF' },
+      { status: 500 }
+    );
   }
 } 
