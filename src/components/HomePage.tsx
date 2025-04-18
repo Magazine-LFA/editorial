@@ -79,7 +79,7 @@ export function LFABackground({ children }: { children: React.ReactNode }) {
       
       {/* Large LFA text overlay with hover effect */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-auto z-0">
-        <div className="w-screen h-screen scale-[2] sm:scale-[1.5] opacity-20">
+        <div className="w-screen h-screen scale-[2] sm:scale-[1.5] opacity-20 break-words whitespace-pre-wrap">
           <TextHoverEffect
             text="LFA"
             duration={0.3}
@@ -102,7 +102,7 @@ export default function HomePage() {
   return (
     <LFABackground>
       <div className="flex flex-col items-center justify-center min-h-screen w-full px-3 sm:px-6 lg:px-8">
-        <div className="text-center w-full max-w-5xl mx-auto space-y-4 sm:space-y-6 md:space-y-8 py-4 sm:py-6">
+        <div className="text-center w-full max-w-5xl mx-auto space-y-3 sm:space-y-4 md:space-y-6 pt-2 sm:pt-4">
           {/* Main LFA logo */}
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
@@ -110,33 +110,40 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-2 sm:mb-4 relative w-full flex justify-center"
           >
-            <div className="relative w-[140px] h-[140px] sm:w-[180px] sm:h-[180px] md:w-[220px] md:h-[220px]">
+            <div className="relative w-[120px] h-[120px] sm:w-[160px] sm:h-[160px] md:w-[200px] md:h-[200px]">
               <Image
                 src="/assets/LFA.png"
                 alt="LFA Logo"
                 fill
                 className="object-contain"
                 priority
-                sizes="(max-width: 640px) 140px, (max-width: 768px) 180px, 220px"
+                sizes="(max-width: 640px) 120px, (max-width: 768px) 160px, 200px"
               />
             </div>
           </motion.div>
           
           {/* Main title with typing animation */}
           <div className="overflow-hidden px-2 sm:px-4 w-full max-w-[95%] sm:max-w-4xl mx-auto">
-            <TypingAnimation
-              text="Welcome to LFA Editorial"
-              delay={0.5}
-              className="text-[1.75rem] xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-snug sm:leading-normal tracking-normal sm:tracking-wide whitespace-pre-wrap sm:whitespace-normal"
-            />
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center sm:space-x-2">
+              <TypingAnimation
+                text="Welcome to LFA"
+                delay={0.5}
+                className="text-[1.5rem] xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-snug sm:leading-normal tracking-normal sm:tracking-wide"
+              />
+              <TypingAnimation
+                text="Editorial"
+                delay={1}
+                className="text-[1.5rem] xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-snug sm:leading-normal tracking-normal sm:tracking-wide"
+              />
+            </div>
           </div>
           
-          {/* Subtitle with typing animation and Latin styling - UPDATED SIZES */}
+          {/* Subtitle with typing animation and Latin styling */}
           <div className="overflow-hidden px-2 sm:px-4 w-full max-w-[90%] sm:max-w-2xl mx-auto">
             <TypingAnimation
               text="LJites' Fetalis Aevum"
               delay={1.5}
-              className="text-base sm:text-xl md:text-2xl lg:text-3xl text-gray-400 tracking-[0.15em] sm:tracking-[0.2em] font-serif italic leading-relaxed"
+              className="text-sm sm:text-base md:text-xl lg:text-2xl text-gray-400 tracking-[0.15em] sm:tracking-[0.2em] font-serif italic leading-relaxed"
             />
           </div>
           
@@ -145,18 +152,18 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 2.5 }}
-            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-2 mb-6 sm:mb-8"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-5 justify-center items-center px-2 mb-4 sm:mb-6"
           >
             <Link
               href="/magazine"
-              className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 bg-[#0f0f2f]/80 backdrop-blur-sm rounded-full text-white font-medium text-base sm:text-lg hover:bg-[#1a1a4f] transition-all duration-300 min-w-[140px] sm:min-w-[160px] border border-[#2a2a6e] hover:shadow-[0_0_15px_rgba(255,0,0,0.3)]"
+              className="w-full sm:w-auto px-5 sm:px-7 py-2 sm:py-2.5 bg-[#0f0f2f]/80 backdrop-blur-sm rounded-full text-white font-medium text-sm sm:text-base hover:bg-[#1a1a4f] transition-all duration-300 min-w-[120px] sm:min-w-[140px] border border-[#2a2a6e] hover:shadow-[0_0_15px_rgba(255,0,0,0.3)]"
             >
               MAGAZINE
             </Link>
             
             <Link
               href="/editorial"
-              className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 bg-transparent backdrop-blur-sm rounded-full text-white font-medium text-base sm:text-lg hover:bg-white/10 transition-all duration-300 min-w-[140px] sm:min-w-[160px] border border-white/30 hover:border-white/50"
+              className="w-full sm:w-auto px-5 sm:px-7 py-2 sm:py-2.5 bg-transparent backdrop-blur-sm rounded-full text-white font-medium text-sm sm:text-base hover:bg-white/10 transition-all duration-300 min-w-[120px] sm:min-w-[140px] border border-white/30 hover:border-white/50"
             >
               EDITORIAL
             </Link>

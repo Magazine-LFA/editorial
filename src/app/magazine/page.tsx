@@ -52,13 +52,13 @@ export default function MagazinePage() {
       <BackgroundBeams />
       <Spotlight />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 py-12 sm:py-16">
+      <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 py-8 sm:py-12">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 sm:mb-12">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4"
           >
             LFA Magazines
           </motion.h1>
@@ -66,29 +66,29 @@ export default function MagazinePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-gray-400 text-lg"
+            className="text-gray-400 text-base sm:text-lg"
           >
             Explore our collection of literary magazines
           </motion.p>
         </div>
 
         {/* Content */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {loading ? (
-            <div className="flex items-center justify-center space-x-4">
-              <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              <span className="text-white/70">Loading magazines...</span>
+            <div className="flex items-center justify-center space-x-3 sm:space-x-4">
+              <div className="w-5 h-5 sm:w-6 sm:h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span className="text-white/70 text-sm sm:text-base">Loading magazines...</span>
             </div>
           ) : error ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-center"
+              className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 sm:p-4 text-center"
             >
-              <p className="text-red-400">{error}</p>
+              <p className="text-red-400 text-sm sm:text-base">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="mt-2 px-4 py-2 text-sm text-white bg-red-500/20 hover:bg-red-500/30 rounded-md transition-colors"
+                className="mt-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-white bg-red-500/20 hover:bg-red-500/30 rounded-md transition-colors"
               >
                 Try Again
               </button>
@@ -97,12 +97,12 @@ export default function MagazinePage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center text-white/70 p-8 bg-white/5 rounded-lg"
+              className="text-center text-white/70 p-6 sm:p-8 bg-white/5 rounded-lg text-sm sm:text-base"
             >
               No magazines available yet.
             </motion.div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {magazines.map((magazine, index) => (
                 <PDFCard
                   key={magazine._id}

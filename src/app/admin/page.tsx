@@ -105,56 +105,58 @@ export default function AdminPage() {
             <Spotlight />
             <Toaster position="top-right" />
 
-            <div className="relative z-10 max-w-6xl mx-auto py-8 px-4 min-h-screen">
-                <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl shadow-xl p-8">
-                    <div className="flex items-center gap-4 mb-8">
+            <div className="relative z-10 max-w-6xl mx-auto py-6 sm:py-8 px-3 sm:px-4 min-h-screen">
+                <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl shadow-xl p-4 sm:p-6 md:p-8">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
                         {/* LFA Logo */}
-                        <div className="w-[50px] h-[50px] relative">
-                            <Image
-                                src="/assets/LFA.png"
-                                alt="LFA Logo"
-                                fill
-                                className="object-contain"
-                                priority
-                            />
+                        <div className="flex items-center gap-3 sm:gap-4">
+                            <div className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] relative">
+                                <Image
+                                    src="/assets/LFA.png"
+                                    alt="LFA Logo"
+                                    fill
+                                    className="object-contain"
+                                    priority
+                                />
+                            </div>
+                            <h1 className="text-2xl sm:text-3xl font-bold text-transparent bg-gradient-to-b from-white via-[#a0a0a0] to-[#707070] bg-clip-text">
+                                Admin Dashboard
+                            </h1>
                         </div>
-                        <h1 className="text-3xl font-bold text-transparent bg-gradient-to-b from-white via-[#a0a0a0] to-[#707070] bg-clip-text">
-                            Admin Dashboard
-                        </h1>
 
-                        <div className="ml-auto">
+                        <div className="sm:ml-auto">
                             <Dialog open={open} onOpenChange={setOpen}>
                                 <DialogTrigger asChild>
-                                    <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/20">
+                                    <Button className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/20 text-sm sm:text-base">
                                         Upload PDF
                                     </Button>
                                 </DialogTrigger>
 
-                                <DialogContent className="sm:max-w-md bg-black/80 backdrop-blur-md border border-white/10 rounded-xl shadow-xl p-8 text-white">
+                                <DialogContent className="sm:max-w-md bg-black/80 backdrop-blur-md border border-white/10 rounded-xl shadow-xl p-4 sm:p-6 md:p-8 text-white mx-3 sm:mx-auto">
                                     <DialogHeader>
-                                        <DialogTitle className="text-2xl font-semibold text-center text-transparent bg-gradient-to-b from-white via-[#a0a0a0] to-[#707070] bg-clip-text">
+                                        <DialogTitle className="text-xl sm:text-2xl font-semibold text-center text-transparent bg-gradient-to-b from-white via-[#a0a0a0] to-[#707070] bg-clip-text">
                                             Upload New PDF
                                         </DialogTitle>
                                     </DialogHeader>
 
                                     <div className="space-y-4">
                                         <div className="space-y-1">
-                                            <Label className="text-sm">Title</Label>
+                                            <Label className="text-xs sm:text-sm">Title</Label>
                                             <Input
                                                 type="text"
                                                 value={title}
                                                 onChange={(e) => setTitle(e.target.value)}
                                                 placeholder="Enter PDF title"
-                                                className="bg-white/90 backdrop-blur text-black"
+                                                className="bg-white/90 backdrop-blur text-black text-sm sm:text-base"
                                                 disabled={isUploading}
                                             />
                                         </div>
 
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-1">
-                                                <Label className="text-sm">Type</Label>
+                                                <Label className="text-xs sm:text-sm">Type</Label>
                                                 <select
-                                                    className="w-full p-2 border rounded-md bg-white/90 backdrop-blur text-black"
+                                                    className="w-full p-2 border rounded-md bg-white/90 backdrop-blur text-black text-sm sm:text-base"
                                                     value={type}
                                                     onChange={(e) => setType(e.target.value as 'magazine' | 'editorial')}
                                                     disabled={isUploading}
@@ -166,14 +168,14 @@ export default function AdminPage() {
                                         </div>
 
                                         <div className="space-y-1">
-                                            <Label className="text-sm">PDF File</Label>
+                                            <Label className="text-xs sm:text-sm">PDF File</Label>
                                             <div className="w-full max-w-4xl mx-auto border border-dashed bg-white/5 dark:bg-black/20 border-neutral-200 dark:border-neutral-800 rounded-lg">
                                                 <FileUpload onChange={handleFileUpload} />
                                             </div>
                                         </div>
 
                                         <Button
-                                            className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white"
+                                            className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base"
                                             onClick={handleSubmit}
                                             disabled={isUploading}
                                         >
@@ -185,15 +187,15 @@ export default function AdminPage() {
                         </div>
                     </div>
 
-                    <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-8" />
+                    <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-6 sm:mb-8" />
 
-                    <div className="space-y-6">
+                    <div className="space-y-4 sm:space-y-6">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-xl font-semibold text-transparent bg-gradient-to-b from-white via-[#a0a0a0] to-[#707070] bg-clip-text">
+                            <h2 className="text-lg sm:text-xl font-semibold text-transparent bg-gradient-to-b from-white via-[#a0a0a0] to-[#707070] bg-clip-text">
                                 Uploaded PDFs
                             </h2>
                             {isFetching && (
-                                <p className="text-blue-400 text-sm animate-pulse">
+                                <p className="text-blue-400 text-xs sm:text-sm animate-pulse">
                                     Fetching data...
                                 </p>
                             )}
@@ -203,17 +205,17 @@ export default function AdminPage() {
                             <Table>
                                 <TableHeader>
                                     <TableRow>
-                                        <TableHead className="text-white/70">Title</TableHead>
-                                        <TableHead className="text-white/70">Type</TableHead>
-                                        <TableHead className="text-white/70">Views</TableHead>
+                                        <TableHead className="text-white/70 text-xs sm:text-sm">Title</TableHead>
+                                        <TableHead className="text-white/70 text-xs sm:text-sm">Type</TableHead>
+                                        <TableHead className="text-white/70 text-xs sm:text-sm">Views</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
                                     {data.map((item) => (
                                         <TableRow key={item._id}>
-                                            <TableCell className="text-white/70">{item.title}</TableCell>
-                                            <TableCell className="text-white/70">{item.type}</TableCell>
-                                            <TableCell className="text-white/70">{item.views}</TableCell>
+                                            <TableCell className="text-white/70 text-xs sm:text-sm">{item.title}</TableCell>
+                                            <TableCell className="text-white/70 text-xs sm:text-sm">{item.type}</TableCell>
+                                            <TableCell className="text-white/70 text-xs sm:text-sm">{item.views}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
