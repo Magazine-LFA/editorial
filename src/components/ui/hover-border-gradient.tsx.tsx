@@ -3,6 +3,17 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 
+interface BorderGradientProps {
+  containerClassName?: string;
+  children: React.ReactNode;
+  as?: React.ElementType;
+  background?: string;
+  boxShadow?: string;
+  borderWidth?: string;
+  className?: string;
+  [key: string]: any;
+}
+
 const BorderGradient = ({
   containerClassName = '',
   children,
@@ -12,7 +23,7 @@ const BorderGradient = ({
   borderWidth = '2px',
   className = '',
   ...otherProps
-}) => {
+}: BorderGradientProps) => {
   const [hovered, setHovered] = useState(false)
 
   return (

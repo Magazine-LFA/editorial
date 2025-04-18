@@ -107,11 +107,10 @@ export default function MagazinePage() {
                 <PDFCard
                   key={magazine._id}
                   title={magazine.title}
-                  date={magazine.createdAt}
+                  date={magazine.createdAt.toISOString()}
                   views={magazine.views}
                   slug={magazine.slug}
                   index={index}
-                  description={magazine.description}
                 />
               ))}
             </div>

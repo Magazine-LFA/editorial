@@ -12,7 +12,6 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog'
 import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead } from '@/components/ui/table'
-import axios from 'axios'
 import { motion } from 'framer-motion'
 import { Toaster, toast } from 'react-hot-toast'
 import Image from 'next/image'
@@ -20,7 +19,6 @@ import { BackgroundBeams } from '@/components/ui/background-beams'
 import { Spotlight } from '@/components/ui/spotlight'
 import { FileUpload } from "@/components/ui/file-upload"
 import type { IPdfData } from "@/models/pdfData"
-import { Trash2 } from 'lucide-react'
 
 export default function AdminPage() {
     const [title, setTitle] = useState('')
@@ -99,30 +97,6 @@ export default function AdminPage() {
         const file = files[0];
         setFile(file);
         toast.success("File selected successfully");
-    };
-
-    const handleDeleteClick = async (id: string) => {
-        try {
-            const response = await fetch(`/api/pdfs/${id}`, {
-                method: 'DELETE',
-            });
-
-            if (!response.ok) {
-                const result = await response.json();
-                throw new Error(result.error || 'Failed to delete PDF');
-            }
-
-            toast.success('PDF deleted successfully');
-            setIsFetching(true);
-            const refetch = await fetch('/api/pdfs');
-            const refetchData = await refetch.json();
-            setData(refetchData.data);
-        } catch (err) {
-            console.error('Error deleting PDF:', err);
-            toast.error('Failed to delete PDF');
-        } finally {
-            setIsFetching(false);
-        }
     };
 
     return (
@@ -232,7 +206,6 @@ export default function AdminPage() {
                                         <TableHead className="text-white/70">Title</TableHead>
                                         <TableHead className="text-white/70">Type</TableHead>
                                         <TableHead className="text-white/70">Views</TableHead>
-                                        <TableHead className="text-white/70">Actions</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -241,17 +214,6 @@ export default function AdminPage() {
                                             <TableCell className="text-white/70">{item.title}</TableCell>
                                             <TableCell className="text-white/70">{item.type}</TableCell>
                                             <TableCell className="text-white/70">{item.views}</TableCell>
-                                            <TableCell>
-                                                <div className="flex items-center gap-2">
-                                                    <Button
-                                                        variant="destructive"
-                                                        size="sm"
-                                                        onClick={() => handleDeleteClick(item._id)}
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
-                                                </div>
-                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

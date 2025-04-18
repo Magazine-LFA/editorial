@@ -9,10 +9,10 @@ export const BackgroundBeams = ({
   beamOrigin = 'right',
 }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const canvasRef = useRef(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       const canvas = canvasRef.current
       if (canvas) {
         const rect = canvas.getBoundingClientRect()

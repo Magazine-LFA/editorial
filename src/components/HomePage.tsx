@@ -59,7 +59,7 @@ const AnimatedLogos = () => {
 };
 
 // Layout component for the LFA background
-export function LFABackground({ children }) {
+export function LFABackground({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-screen w-full relative overflow-hidden bg-[#010314]">
       {/* Semi-transparent white background */}
@@ -169,39 +169,3 @@ export default function HomePage() {
     </LFABackground>
   )
 }
-
-// Update the TypingAnimation component
-export const TypingAnimation = ({
-  text,
-  className,
-  delay = 0,
-}: {
-  text: string;
-  className?: string;
-  delay?: number;
-}) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay }}
-      className={`flex flex-wrap sm:flex-nowrap justify-center gap-x-2 gap-y-1 ${className}`}
-    >
-      {text.split(" ").map((word, wordIndex) => (
-        <motion.div
-          key={wordIndex}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.3,
-            delay: delay + wordIndex * 0.1,
-            ease: "easeOut",
-          }}
-          className="inline-block"
-        >
-          {word}
-        </motion.div>
-      ))}
-    </motion.div>
-  );
-};

@@ -3,10 +3,15 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
+interface TextGenerateEffectProps {
+  words: string;
+  className?: string;
+}
+
 export const TextGenerateEffect = ({
   words,
   className = '',
-}) => {
+}: TextGenerateEffectProps) => {
   const [completed, setCompleted] = useState(false)
   
   useEffect(() => {

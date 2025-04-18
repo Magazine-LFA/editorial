@@ -107,11 +107,10 @@ export default function EditorialPage() {
                 <PDFCard
                   key={editorial._id}
                   title={editorial.title}
-                  date={editorial.createdAt}
+                  date={editorial.createdAt.toISOString()}
                   views={editorial.views}
                   slug={editorial.slug}
                   index={index}
-                  description={editorial.description}
                 />
               ))}
             </div>

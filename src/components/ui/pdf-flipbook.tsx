@@ -187,7 +187,7 @@ export const PDFFlipBook = ({ numPages }: PDFFlipBookProps) => {
             >
                 <HTMLFlipBook
                     width={width}
-                    height={width * 1.414} // A4 aspect ratio
+                    height={width * 1.414}
                     size="stretch"
                     minWidth={315}
                     maxWidth={800}
@@ -198,6 +198,18 @@ export const PDFFlipBook = ({ numPages }: PDFFlipBookProps) => {
                     mobileScrollSupport={true}
                     ref={bookRef}
                     className="demo-book"
+                    style={{ background: 'transparent' }}
+                    startPage={0}
+                    drawShadow={true}
+                    flippingTime={1000}
+                    usePortrait={true}
+                    startZIndex={0}
+                    autoSize={true}
+                    clickEventForward={true}
+                    useMouseEvents={true}
+                    swipeDistance={0}
+                    showPageCorners={true}
+                    disableFlipByClick={false}
                 >
                     {Array.from({ length: numPages || 0 }, (_, i) => (
                         <div key={i} className="page">
