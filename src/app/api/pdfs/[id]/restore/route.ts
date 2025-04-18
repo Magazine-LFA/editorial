@@ -4,42 +4,31 @@ import PdfData from '@/models/pdfData';
 
 export async function PATCH(
   request: Request,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
     await dbConnect();
     
-    const { id } = context.params;
-    if (!id) {
-      return NextResponse.json({
-        success: false,
-        error: 'PDF ID is required'
-      }, { status: 400 });
-    }
-
-    const pdf = await PdfData.findById(id);
+    const document = await PdfData.findById(params.id);
     
-    if (!pdf) {
+    if (!document) {
       return NextResponse.json({
-        success: false,
         error: 'PDF not found'
       }, { status: 404 });
     }
 
-    // Update without validation
-    await PdfData.findByIdAndUpdate(id, {
+    // Restore the PDF by removing the deleted flags
+    await PdfData.findByIdAndUpdate(params.id, {
       isDeleted: false,
       deletedAt: null
-    }, { runValidators: false });
+    });
 
     return NextResponse.json({
-      success: true,
-      message: 'PDF restored successfully'
+      success: true
     });
   } catch (error) {
     console.error('Error restoring PDF:', error);
     return NextResponse.json({
-      success: false,
       error: 'Failed to restore PDF'
     }, { status: 500 });
   }
