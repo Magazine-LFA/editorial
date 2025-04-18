@@ -141,7 +141,7 @@ export default function HomePage() {
           {/* Subtitle with typing animation and Latin styling */}
           <div className="overflow-hidden px-2 sm:px-4 w-full max-w-[90%] sm:max-w-2xl mx-auto">
             <TypingAnimation
-              text="LJites' Fetalis Aevum"
+              text="LJites' Fetialis Aevum"
               delay={1.5}
               className="text-sm sm:text-base md:text-xl lg:text-2xl text-gray-400 tracking-[0.15em] sm:tracking-[0.2em] font-serif italic leading-relaxed"
             />
