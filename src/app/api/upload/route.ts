@@ -1,14 +1,7 @@
 import { NextResponse } from 'next/server'
-import { v2 as cloudinary } from 'cloudinary'
 import dbConnect from '@/lib/mongo'
 import PdfData from '@/models/pdfData'
-import { Readable } from 'stream'
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-})
+import { uploadFile } from '@/lib/firebase-storage'
 
 export async function POST(req: Request) {
   try {
@@ -43,32 +36,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Database connection failed' }, { status: 500 })
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer())
+    // Upload file to Firebase Storage
+    const fileName = `${slug}-${Date.now()}.pdf`
+    const fileUrl = await uploadFile(file, fileName)
 
-    // Upload file to Cloudinary
-    const result = await new Promise<any>((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
-        {
-          resource_type: 'auto',
-          folder: 'pdf_uploads',
-          public_id: `${slug}-${Date.now()}`,
-          format: 'pdf',
-        },
-        (error, result) => {
-          if (error) reject(error)
-          else resolve(result)
-        }
-      )
-
-      Readable.from(buffer).pipe(stream)
-    })
-
-    // Save metadata to MongoDB without page_view_type
+    // Save metadata to MongoDB
     try {
       const newDoc = await PdfData.create({
         title,
         slug,
-        gdrive: result.secure_url,
+        fileUrl,
         scheduled_date,
         type,
         views: 0
