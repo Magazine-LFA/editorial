@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 const inter = Inter({ subsets: ['latin'] });
+import '../app/globals.css'
 
 export interface RootLayoutProps {
   children: ReactNode;
